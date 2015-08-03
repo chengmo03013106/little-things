@@ -1,0 +1,44 @@
+
+
+#include <stdio.h>
+#include <string.h>
+
+int common_hash(const char * str, int size) {
+	int i = 0;
+	int len = (strlen(str)+1)/2;
+	unsigned int ret = 0;
+	unsigned short * s = (unsigned short *)str;
+	for( ; i<len;++i) {
+		ret ^= (s[i] << (i & 0xF));
+	}
+	return ret%size;
+}
+
+
+// Follow/Noll/Vo Hash
+uint32_t hash_value(uint8_t *key,uint32_t len)
+{
+	uint32_t hash_value_ = 0;
+	uint8_t *begin = key;
+	uint8_t *end = ken+len;
+	for(hash_value_ =  0; begin < end; ++begin)
+	{
+		hash_value_ *= 16777619;
+		hash_value_ ^= (uint32_t)*begin;
+	}
+	return hash_value_;
+} 
+
+// Brain Kernighan and Dennis Ritchie 
+int BKDRHash(char * str)
+{
+	unsigned int seed = 13131313;                /*        31 131 1313 13131 131313 etc..        */
+	unsigned int hash = 0;
+
+	while (*str)
+	{
+		hash = hash * seed + (*str++);
+	}
+	return (hash & 0x7FFFFFFF);
+}
+
